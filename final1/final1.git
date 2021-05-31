@@ -1,0 +1,97 @@
+function solve (arr){
+let obj ={};
+
+let line = arr.shift();
+
+
+while (line !== "Results"){
+let commands = line.split(":");
+
+    let command =commands[0];
+
+if (command === "Add"){
+
+    let heroName = commands[1];
+    let health = Number(commands[2]);
+    let energy = Number(commands[3]);
+
+
+
+    if (!obj.hasOwnProperty(heroName)){
+
+
+        obj[heroName] ={health, energy};
+    }else{
+
+        obj[heroName].health+=health;
+       
+    }
+
+}else if (command ==='Attack'){
+
+let attacker = commands[1];
+let defender = commands[2];
+let damage = Number(commands[3]);
+
+if ( obj.hasOwnProperty(attacker) && obj.hasOwnProperty(defender)){
+    
+
+obj[defender].health -= damage;
+
+if (obj[defender].health<=0){
+
+
+    console.log(`${defender} was disqualified!`);
+delete obj[defender];
+
+}
+
+obj[attacker].energy-= 1;
+if (obj[attacker].energy<=0){
+
+console.log(`${attacker} was disqualified!`)
+delete obj[attacker];
+}
+}
+}else if (command==="Delete"){
+let heroName= commands[1];
+
+if (heroName === "All"){
+
+   obj ={}
+}else{
+
+    delete obj[heroName];
+}   
+}
+line =arr.shift();
+}
+console.log(`People count: ${countProperties(obj)}` )
+
+function countProperties(obj) {
+   var count = 0;
+   for(var prop in obj) {
+       if(obj.hasOwnProperty(prop))
+            ++count;
+   }
+
+  return count;
+}
+let workArr = Object.entries(obj)
+let sorted = workArr.sort((a, b) => {
+    if (a[1].health === b[1].health) {
+        return a[0].localeCompare(b[0]);
+    }
+    else {
+        return b[1].health - a[1].health;
+    }
+})
+
+
+
+for (const kvp of sorted) {
+    console.log(`${kvp[0]} - ${kvp[1].health} - ${kvp[1].energy}`);
+
+
+}
+}
