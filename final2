@@ -1,0 +1,81 @@
+function solve(arr){
+
+let userName = arr.shift();
+let line = arr.shift();
+
+while( line !== "Sign up" ){
+let commands =line.split(" ");
+let command = commands[0];
+
+if (command==='Case' ) {
+    let cs =commands[1];
+    
+    if (cs==="lower"){
+    userName = userName.toLowerCase();
+    console.log(userName);
+    }else if (cs==="upper"){
+    userName = userName.toUpperCase();
+    console.log(userName);
+    }
+}else if (command ==='Reverse'){
+    let indexStart = Number(commands[1]);
+   let indexEnd = Number(commands[2]);
+    if (
+      indexStart >= 0 &&
+      indexStart < userName.length &&
+      indexEnd >= 0 &&
+      indexEnd < userName.length
+    ) {
+      let str = userName
+        .substring(indexStart, indexEnd + 1)
+        .split("")
+        .reverse()
+        .join("");
+      console.log(str)
+
+
+}
+}else if( command ==="Cut"){
+let str= commands[1];
+    if (userName.includes(str)){
+
+   userName= userName.replace(str,'');
+    console.log(userName);
+
+    }else{
+
+        console.log(`The word ${userName} doesn't contain ${str}.`);
+    }
+
+}else if (command ==='Replace'){
+let ch = commands[1];
+userName =userName.replace(ch,"*")
+for (let index = 0; index < userName.length; index++) {
+ 
+
+    userName =userName.replace(ch,"*")
+   
+   
+    
+}
+ console.log(userName);
+}else if(command ==="Check"){
+let ch =commands[1];
+if (userName.includes(ch)) {
+
+    console.log(`Valid`);
+    
+}else{
+    console.log(`Your username must contain ${ch}.`)
+}
+}
+
+    line = arr.shift();
+}
+
+}
+solve(["ThisIsMyString", 
+"Reverse 1 4", 
+"Replace i", 
+"Cut My", 
+"Sign up"])
